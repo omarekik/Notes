@@ -1,16 +1,17 @@
-* Solving conflict by putting trunk branch modification in new commit at the end of feature branch 
+* Solving conflict by putting master branch modification in new commit at the end of feature branch (merge origin/master to local branch1 before merging origin/branch1 on origin/master)
 	* git pull origin develop   // pull will fail merging origin/master branch in local branch1 due to conflict that we need to solve
 	* (solve the conflict) git status / git diff / git add
 	* git commit   // create commit for modifications that solve the conflict
-	* git push origin HEAD   // push local branch1 to remote one and now, it is possible to merge origin/branch1 on origin/master
+	* git push origin HEAD   // push local branch1 to remote one and now, it is possible to merge origin/branch1 to origin/master
 
-
-* Solving conflict by rebasing feature branch at the end of trunk branch modification (needs forcing push)   
+* Solving conflict by rebasing feature branch at the end of master branch modification (needs forcing push)   
 	* git pull --rebase origin develop
 	* (solve the conflict) git status / git diff / git add
 	* git rebase --continue
 	* git push --force-with-lease
 
+* When solving conflict by rebase/force, the remote branch looks cleaner, but rebasing mechanism could cause solving local commit conflicts that are reverted in following commit, which is a wast of time. So it is recommended to use rebase for solving conflict only if local branch does not contain revert of cherry picking.
+  
 * If remote branch feature_branch becomes messy and we have the ability of forcing push:
 	* create a patch file that contains all modification of feature_branch: git diff @~9..@ >> ../modif.patch (in this example we have 9 commits)
 	* rename the branch locally: git branch -m feature_branch feature_branch_workspace
