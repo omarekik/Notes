@@ -10,7 +10,7 @@
 	* git rebase --continue
 	* git push --force-with-lease
 
-* When solving conflict by rebase/force, the remote branch looks cleaner, but rebasing mechanism could cause solving local commit conflicts that are reverted in following commit, which is a wast of time. So it is recommended to use rebase for solving conflict only if local branch does not contain revert of cherry picking.
+* When solving conflict by rebase/force, the remote branch looks cleaner, but rebasing mechanism could cause solving local commit conflicts that are reverted in following commit, which is a wast of time. So it is recommended to use rebase for solving conflict only if local branch does not contain revert or cherry picking.
   
 * If remote branch feature_branch becomes messy and we have the ability of forcing push:
 	* create a patch file that contains all modification of feature_branch: git diff @~9..@ >> ../modif.patch (in this example we have 9 commits)
@@ -35,8 +35,8 @@
 * Remove all modification in file.h:  
 	git checkout -- file.h   
 
-* Make local branch like the remote one:  
-	git reset --hard HEAD && git clean -fd --force  
+* Make local branch like the remote branch1:  
+	git reset --hard origin/branch1 && git clean -fd --force  
 
 * In case we have a new commit in one of the submodules:  
 	git submodule update --init --recursive --force  
