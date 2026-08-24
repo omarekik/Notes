@@ -132,6 +132,25 @@ source.cpp
 
 ---
 
+## Valgrind
+
+| Command | Description |
+|---------|-------------|
+| `valgrind --tool=memcheck --leak-check=yes --log-file=file1.log ./exe` | Execute with Memcheck and log results to file |
+| `vi file1.log` | View memory check report |
+| `g++ -g simple_race.cpp -lpthread -std=c++20 && valgrind --tool=helgrind ./a.out` | Detect data races with Helgrind |
+| `g++ -g simple_race.cpp -fsanitize=thread -lpthread -std=c++20 && ./a.out` | Detect data races with ThreadSanitizer |
+
+**Valgrind Tools:**
+- **Memcheck** - Memory error detector (detects memory leaks, use-after-free, invalid access, etc.)
+- **Helgrind** - Thread race condition debugger
+- **DRD** - Another thread race condition detector
+- **Cachegrind** - Cache and branch-prediction profiler
+- **Callgrind** - Call-graph generating cache and branch-prediction profiler
+- **Massif** - Heap profiler
+
+---
+
 ## Tips & Tricks
 
 - **Quick compile and run**: `gcc main.c -o main && ./main`
