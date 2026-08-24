@@ -5,8 +5,8 @@
 | Command | Description |
 |---------|-------------|
 | `gcc main.c -o main` | Compile C file to executable |
-| `g++ -std=c++17 lab.cpp -o lab` | Compile C++ file with standard specification |
-| `g++ -g -std=c++17 lab.cpp -o lab && ./lab` | Compile with debug symbols and run |
+| `g++ -std=c++20 lab.cpp -o lab` | Compile C++ file with standard specification |
+| `g++ -g -std=c++20 lab.cpp -o lab && ./lab` | Compile with debug symbols and run |
 | `gcc -c file.c -o file.o` | Compile to object file only (no linking) |
 
 ---
@@ -27,14 +27,28 @@
 
 ---
 
-## Preprocessor & Code Generation
+## Compilation Stages
 
-| Command | Description |
-|---------|-------------|
-| `gcc -E main.c > myFile.txt` | Generate preprocessed code (after #include, #define) |
-| `gcc -S main.c > myFile.txt` | Generate assembly code |
-| `gcc -save-temps main.c` | Generate preprocessed and assembly code (.i, .s files) |
-| `gcc -dM -E main.c` | Show all defined macros |
+```text
+source.cpp
+    │
+    ├── Preprocess ── -E ──> preprocessed code
+    │
+    ├── Compile ───── -S ──> assembly (.s)
+    │
+    ├── Assemble ──── -c ──> object file (.o)
+    │
+    └── Link ───────────────> executable
+```
+
+|Command|Purpose|
+|-|-|
+|`g++ -E main.cpp -o main.ii`|Preprocessed code|
+|`g++ -S main.cpp -o main.s`|Assembly|
+|`g++ -c main.cpp -o main.o`|Object file|
+|`g++ main.o -o main`|Link object file|
+|`g++ -save-temps main.cpp`|Keep intermediate files|
+|`g++ -v`|Verbose compiler information|
 
 ---
 
@@ -43,10 +57,8 @@
 | Command | Description |
 |---------|-------------|
 | `-O0` | No optimization (default) |
-| `-O1` | Basic optimization |
 | `-O2` | Moderate optimization (recommended) |
 | `-O3` | Aggressive optimization (may increase compile time) |
-| `-Os` | Optimize for size |
 | `-Ofast` | Very aggressive optimization (may violate standards) |
 | `gcc -Q --help=optimizers` | Show optimization flags and their current state |
 
@@ -94,22 +106,6 @@
 
 ---
 
-## Standard & Language Options
-
-| Command | Description |
-|---------|-------------|
-| `-std=c89` | Compile as C89 (C90) standard |
-| `-std=c99` | Compile as C99 standard |
-| `-std=c11` | Compile as C11 standard |
-| `-std=c17` | Compile as C17 standard |
-| `-std=c++98` | Compile as C++98 standard |
-| `-std=c++11` | Compile as C++11 standard |
-| `-std=c++14` | Compile as C++14 standard |
-| `-std=c++17` | Compile as C++17 standard |
-| `-std=c++20` | Compile as C++20 standard |
-
----
-
 ## Linking & Dependencies
 
 | Command | Description |
@@ -132,6 +128,7 @@
 | `-fstack-protector` | Add stack overflow protection |
 | `-fsanitize=address` | Enable AddressSanitizer (memory errors) |
 | `-fsanitize=undefined` | Enable UndefinedBehaviorSanitizer |
+| `-fsanitize=thread` | Enable ThreadSanitizer |
 
 ---
 
@@ -149,5 +146,4 @@
 ## Resources
 
 - **GCC Manual**: https://gcc.gnu.org/onlinedocs/
-- **GCC Options**: https://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html
 - **Quick Tip**: Always use `-Wall` and `-g` during development!
